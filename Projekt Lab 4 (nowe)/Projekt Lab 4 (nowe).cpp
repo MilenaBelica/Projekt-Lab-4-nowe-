@@ -17,7 +17,7 @@ float CtoK(float celsius) {
     float wynik = (celsius + 273.15);
     return wynik;
 }
-
+ 
 float CtoF(float celsius) {
     float wynik = (celsius * 9.0 / 5.0) + 32.0;
     return wynik;
