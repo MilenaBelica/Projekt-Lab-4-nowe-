@@ -169,9 +169,9 @@ int main() {
         default:
             cout << "Podano zly numer programu" << endl;
         }
-        char enter;
         cout << "Aby przejsc dalej, podaj wcisnij enter: ";
-        cin >> enter;
+        cin.ignore();
+        cin.get();
     }
 
     return 0;
