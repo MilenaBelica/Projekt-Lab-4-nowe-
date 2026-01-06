@@ -1,70 +1,21 @@
 ﻿
 #include <iostream>
 #include <stdlib.h> // cls do czyszczenia ekranu
+#include "headerFile.h" //cudzysłów!!
 using namespace std;
 
-float KtoF(float kelvin) {
-    float wynik = (((kelvin - 273.15) * 9.0 / 5.0) + 32);
-    return wynik;
-}
+int DataCounter = 0;//wskazuje na pierwszy pusty elemt tablicy
+double pamiec[100]; // przechowuje temperatury: stare i nowe
 
-float KtoC(float kelvin) {
-    float wynik = (kelvin - 273.15);
-    return wynik;
-}
+char jednostka[100]; //przechowywanie jednostki temp podanej i obliczonej
 
-float CtoK(float celsius) {
-    float wynik = (celsius + 273.15);
-    return wynik;
-}
- 
-float CtoF(float celsius) {
-    float wynik = (celsius * 9.0 / 5.0) + 32.0;
-    return wynik;
-}
 
-float FtoK(float fahr) {
-    float wynik = (5.0 / 9.0) * (fahr + 459.67);
-    return wynik;
-}
-
-float FtoC(float fahr) {
-    float wynik = (5.0 / 9.0) * (fahr - 32.0);
-    return wynik;
-}
-
-void program() {
-    cout << "Wybierz program: " << endl;
-    cout << "1 - przelicz Fahr -> Celsius" << endl;
-    cout << "2 - przelicz Fahr -> Kelwin" << endl;
-    cout << "3 - przelicz Celsius -> Fahr" << endl;
-    cout << "4 - przelicz Celsius -> Kelwin" << endl;
-    cout << "5 - przelicz Kelwin -> Celsius" << endl;
-    cout << "6 - przelicz Kelwin -> Fahr" << endl;
-    cout << "7 - zakoncz dzialanie programu" << endl;
-}
-
-int check(float temp, char stopnie) {
-    switch (stopnie) {
-    case 'F':
-        if (temp < -459.67) return -999;
-        else return temp;
-    case 'C':
-        if (temp < -273.15) return -999;
-        else return temp;
-    case 'K':
-        if (temp < 0) return -999;
-        else return temp;
-    default:
-        return -999;
-    }
-}
 
 int main() {
     int numerprogramu;
 
-    for (int i = 0;; i++) { // tak jak w Twoim oryginalnym kodzie
-        system("cls");
+    for (int i = 0;; i++) { 
+        system("cls"); // czyszczenie ekranu
 
         cout << "Ktory program chcesz uruchomic ?" << endl;
         program();
@@ -89,6 +40,12 @@ int main() {
                 celsius = FtoC(fahr);
                 cout << fahr << " Fahr to " << celsius << " Celsius " << endl;
             }
+            pamiec[DataCounter] = fahr; //przechowywanie temp podanej
+            jednostka[DataCounter] = 'F';
+            DataCounter++;
+            pamiec[DataCounter] = celsius; // przechowywanie temp obliczonej
+            jednostka[DataCounter] = 'C'; 
+            DataCounter++;
             break;
         }
         case 2: {
@@ -104,6 +61,12 @@ int main() {
                 kelvin = FtoK(fahr);
                 cout << fahr << " Fahr to " << kelvin << " Kelvin " << endl;
             }
+            pamiec[DataCounter] = fahr;
+            jednostka[DataCounter] = 'F';
+            DataCounter++;
+            pamiec[DataCounter] = kelvin;
+            jednostka[DataCounter] = 'K';
+            DataCounter++;
             break;
         }
         case 3: {
@@ -119,6 +82,12 @@ int main() {
                 fahr = CtoF(celsius);
                 cout << celsius << " Celsius to " << fahr << " Fahr " << endl;
             }
+            pamiec[DataCounter] = celsius;
+            jednostka[DataCounter] = 'C';
+            DataCounter++;
+            pamiec[DataCounter] = fahr;
+            jednostka[DataCounter] = 'F';
+            DataCounter++;
             break;
         }
         case 4: {
@@ -134,6 +103,12 @@ int main() {
                 kelvin = CtoK(celsius);
                 cout << celsius << " Celsius to " << kelvin << " Kelvina " << endl;
             }
+            pamiec[DataCounter] = celsius;
+            jednostka[DataCounter] = 'C';
+            DataCounter++;
+            pamiec[DataCounter] = kelvin;
+            jednostka[DataCounter] = 'K';
+            DataCounter++;
             break;
         }
         case 5: {
@@ -149,6 +124,12 @@ int main() {
                 celsius = KtoC(kelvin);
                 cout << kelvin << " Kelvin to " << celsius << " Celsius " << endl;
             }
+            pamiec[DataCounter] = kelvin;
+            jednostka[DataCounter] = 'K';
+            DataCounter++;
+            pamiec[DataCounter] = celsius;
+            jednostka[DataCounter] = 'C';
+            DataCounter++;
             break;
         }
         case 6: {
@@ -164,11 +145,26 @@ int main() {
                 fahr = KtoF(kelvin);
                 cout << kelvin << " Kelvin to " << fahr << " Fahr " << endl;
             }
+            pamiec[DataCounter] = kelvin;
+            jednostka[DataCounter] = 'K';
+            DataCounter++;
+            pamiec[DataCounter] = fahr;
+            jednostka[DataCounter] = 'F';
+            DataCounter++;
+            break;
+        }
+        case 8: {
+            for (int i = 0; i < DataCounter; i+=2) {
+                cout << pamiec[i] << jednostka[i] << '\t';
+                cout << pamiec[i + 1] << jednostka[i + 1] << endl;
+            }
+            cout << endl;
             break;
         }
         default:
             cout << "Podano zly numer programu" << endl;
         }
+        cout << "Podano juz: " << (DataCounter + 1)/2 << " temperatur do przeliczenia. " << endl;
         cout << "Aby przejsc dalej, podaj wcisnij enter: ";
         cin.ignore();
         cin.get();
