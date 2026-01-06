@@ -154,12 +154,57 @@ int main() {
             break;
         }
         case 8: {
-            for (int i = 0; i < DataCounter; i+=2) {
-                cout << pamiec[i] << jednostka[i] << '\t';
-                cout << pamiec[i + 1] << jednostka[i + 1] << endl;
+            cout << "Wybierz ktora historie chcesz zobaczyc: " << endl;
+            wersjahistorii(); 
+            int wersja;
+            cin >> wersja;
+
+            if (DataCounter != 0) {
+                switch (wersja) {
+                case 1: {
+                    for (int i = 0; i < DataCounter; i += 2) {
+                        if (jednostka[i] == 'C') {
+                            cout << pamiec[i] << jednostka[i] << '\t';
+                            cout << pamiec[i + 1] << jednostka[i + 1] << endl;
+                        }
+                    }
+                    cout << endl;
+                    break;
+                }
+                case 2: {
+                    for (int i = 0; i < DataCounter; i += 2) {
+                        if (jednostka[i] == 'F') {
+                            cout << pamiec[i] << jednostka[i] << '\t';
+                            cout << pamiec[i + 1] << jednostka[i + 1] << endl;
+                        }
+                        }
+                    cout << endl;
+                    break;
+                }
+                case 3: {
+                    for (int i = 0; i < DataCounter; i += 2) {
+                        if (jednostka[i] == 'K') {
+                            cout << pamiec[i] << jednostka[i] << '\t';
+                            cout << pamiec[i + 1] << jednostka[i + 1] << endl;
+                        }
+                        }
+                    cout << endl;
+                    break;
+                }
+                case 4: {
+                    for (int i = 0; i < DataCounter; i += 2) {
+                        cout << pamiec[i] << jednostka[i] << '\t';
+                        cout << pamiec[i + 1] << jednostka[i + 1] << endl;
+                    }
+                    cout << endl;
+                    break;
+                }
+                }
             }
-            cout << endl;
-            break;
+            else {
+                cout << "Historia nie istnieje. " << endl;
+            }
+            
         }
         default:
             cout << "Podano zly numer programu" << endl;

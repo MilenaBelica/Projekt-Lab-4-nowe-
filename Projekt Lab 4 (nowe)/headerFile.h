@@ -1,4 +1,5 @@
 #pragma once
+using namespace std;
 
 float KtoF(float kelvin) {
     float wynik = (((kelvin - 273.15) * 9.0 / 5.0) + 32);
@@ -56,4 +57,11 @@ int check(float temp, char stopnie) {
     default:
         return -999;
     }
+}
+
+void wersjahistorii(){
+    cout << "1 - Tylko C na K/F" << endl;
+    cout << "2 - Tylko F na C/K" << endl;
+    cout << "3 - Tylko K na C/F" << endl;
+    cout << "4 - Cala Historia" << endl;
 }
