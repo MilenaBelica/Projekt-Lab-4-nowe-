@@ -13,9 +13,16 @@ char jednostka[100]; //przechowywanie jednostki temp podanej i obliczonej
 
 int main() {
     int numerprogramu;
+    int entitytoRemove;
 
+    
     for (int i = 0;; i++) { 
+        
         system("cls"); // czyszczenie ekranu
+
+        if (DataCounter > 100) { // ostrzeżenie o zapełnieniu pamięci
+            cout << "Zapelniono pamiec: przeliczenia nie będą już zapisywane. " << endl;
+        }
 
         cout << "Ktory program chcesz uruchomic ?" << endl;
         program();
@@ -155,7 +162,7 @@ int main() {
         }
         case 8: {
             cout << "Wybierz ktora historie chcesz zobaczyc: " << endl;
-            wersjahistorii(); 
+            wersjahistorii();
             int wersja;
             cin >> wersja;
 
@@ -177,7 +184,7 @@ int main() {
                             cout << pamiec[i] << jednostka[i] << '\t';
                             cout << pamiec[i + 1] << jednostka[i + 1] << endl;
                         }
-                        }
+                    }
                     cout << endl;
                     break;
                 }
@@ -187,7 +194,7 @@ int main() {
                             cout << pamiec[i] << jednostka[i] << '\t';
                             cout << pamiec[i + 1] << jednostka[i + 1] << endl;
                         }
-                        }
+                    }
                     cout << endl;
                     break;
                 }
@@ -203,13 +210,38 @@ int main() {
             }
             else {
                 cout << "Historia nie istnieje. " << endl;
+
             }
-            
+            break;
+        }
+        case 9: { //czyscimy ekran i wyswietlanie calej historii
+            system("cls");
+
+            for (int i = 0; i < DataCounter; i += 2) {
+                cout << ((i/2)+1) << "." << '\t' << pamiec[i] << jednostka[i] << '\t';
+                cout << pamiec[i + 1] << jednostka[i + 1] << endl;
+            }
+            cout << endl;
+            cout << "Ktora linie chcesz usunac? " << endl;
+            cin >> entitytoRemove;
+
+            if (entitytoRemove >= DataCounter) {
+                cout << "Taki element nie istnieje. " << endl;
+            }
+            else {
+                for (int i = entitytoRemove * 2 - 2; i <= DataCounter - 1; i++) {
+                    pamiec[i] = pamiec[i + 2];
+                }
+                DataCounter -= 2;
+                }
+            break;
+        
         }
         default:
             cout << "Podano zly numer programu" << endl;
         }
         cout << "Podano juz: " << (DataCounter + 1)/2 << " temperatur do przeliczenia. " << endl;
+        cout << "----------------------------------------------------------------" << endl;
         cout << "Aby przejsc dalej, podaj wcisnij enter: ";
         cin.ignore();
         cin.get();

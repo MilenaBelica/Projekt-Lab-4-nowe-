@@ -41,6 +41,7 @@ void program() {
     cout << "6 - przelicz Kelwin -> Fahr" << endl;
     cout << "7 - zakoncz dzialanie programu" << endl;
     cout << "8 - pokaz historie" << endl;
+    cout << "9 - usun historie" << endl;
 }
 
 int check(float temp, char stopnie) {
