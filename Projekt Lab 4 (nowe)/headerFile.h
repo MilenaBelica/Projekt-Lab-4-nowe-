@@ -42,6 +42,7 @@ void program() {
     cout << "7 - zakoncz dzialanie programu" << endl;
     cout << "8 - pokaz historie" << endl;
     cout << "9 - usun historie" << endl;
+    cout << "10 - zmodyfikuj historie" << endl;
 }
 
 int check(float temp, char stopnie) {
@@ -65,4 +66,88 @@ void wersjahistorii(){
     cout << "2 - Tylko F na C/K" << endl;
     cout << "3 - Tylko K na C/F" << endl;
     cout << "4 - Cala Historia" << endl;
+}
+
+void modyfikacja(int toModificate) {
+    int Temp = 0, c;
+    char Jednostkadozamiany; //pierwotna jednostka
+    char Jednostka;//jednostka zmieniona
+
+    //pytamay o nowa temp
+    cin.ignore(); //zeby gatchar nie odczytywal poprzednich cinów
+    cout << "Podaj nowa wartosc temperatury do przeliczenia (np. 10F): ";
+    while ((c = getchar()) != EOF) {
+        if (c>='0' && c<='9') {
+            c = c - '0'; // z kodu ASCII chce otrzymaæ liczbê
+            Temp = c + Temp;
+            Temp = Temp * 10;
+        }
+        else if(c == 'F' || c == 'C' || c == 'K') {
+            Jednostkadozamiany = c;
+            break;
+        }
+       
+    }
+    Temp = Temp / 10;
+    pamiec[toModificate * 2 - 2] = Temp;
+    jednostka[toModificate * 2 - 2] = Jednostkadozamiany;
+
+    //pytamy na jaka temp przeliczyc
+    int d;
+    cout << "Podaj na jaka jednostke chcesz zamienic ta temperature(C/F/K): ";
+    cin >> Jednostka;
+   
+    while ((d = getchar()) != EOF) {
+        if (Jednostka == 'F') {
+            if (Jednostkadozamiany == 'C') {
+                pamiec[toModificate * 2 - 1] = CtoF(Temp);
+                jednostka[toModificate * 2 - 1] = Jednostka;
+            }
+            else if (Jednostkadozamiany == 'K') {
+                pamiec[toModificate * 2 - 1] = KtoF(Temp);
+                jednostka[toModificate * 2 - 1] = Jednostka;
+            }
+            else {
+                cout << "Podano zla jednostke. " << endl;
+            }
+
+        }
+        else if (Jednostka == 'C') {
+            if (Jednostkadozamiany == 'K') {
+                pamiec[toModificate * 2 - 1] = KtoC(Temp);
+                jednostka[toModificate * 2 - 1] = Jednostka;
+            }
+            else if (Jednostkadozamiany == 'F') {
+                pamiec[toModificate * 2 - 1] = FtoC(Temp);
+                jednostka[toModificate * 2 - 1] = Jednostka;
+            }
+            else {
+                cout << "Podano zla jednostke. " << endl;
+            }
+
+        }
+        else if (Jednostka == 'K') {
+            if (Jednostkadozamiany == 'C') {
+                pamiec[toModificate * 2 - 1] = CtoK(Temp);
+                jednostka[toModificate * 2 - 1] = Jednostka;
+            }
+            else if (Jednostkadozamiany == 'F') {
+                pamiec[toModificate * 2 - 1] = FtoK(Temp);
+                jednostka[toModificate * 2 - 1] = Jednostka;
+            }
+            else {
+                cout << "Podano zla jednostke. " << endl;
+            }
+
+        }
+        else {
+            cout << "Podano zla jednostke." << endl;
+        }
+        
+        cout << pamiec[toModificate * 2 - 2];
+        cout << jednostka[toModificate * 2 - 2]<< '\t';
+        cout << pamiec[toModificate * 2 - 1];
+        cout << jednostka[toModificate * 2 - 1]<< '\t'<< endl;
+        break;
+    }
 }

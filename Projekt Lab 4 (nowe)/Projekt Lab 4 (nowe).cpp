@@ -1,19 +1,21 @@
 ﻿
 #include <iostream>
 #include <stdlib.h> // cls do czyszczenia ekranu
-#include "headerFile.h" //cudzysłów!!
-using namespace std;
 
 int DataCounter = 0;//wskazuje na pierwszy pusty elemt tablicy
 double pamiec[100]; // przechowuje temperatury: stare i nowe
 
 char jednostka[100]; //przechowywanie jednostki temp podanej i obliczonej
 
+#include "headerFile.h" //cudzysłów!!
+using namespace std;
+
 
 
 int main() {
     int numerprogramu;
     int entitytoRemove;
+    int toModificate;
 
     
     for (int i = 0;; i++) { 
@@ -235,8 +237,19 @@ int main() {
                 DataCounter -= 2;
                 }
             break;
-        
         }
+        case 10: {
+            for (int i = 0; i < DataCounter; i += 2) {
+                cout << ((i / 2) + 1) << "." << '\t' << pamiec[i] << jednostka[i] << '\t';
+                cout << pamiec[i + 1] << jednostka[i + 1] << endl;
+            }
+            cout << endl;
+            cout << "Ktora linie chcesz zmodyfikowac? ";
+            cin >> toModificate;
+            modyfikacja(toModificate);
+            break;
+              }
+
         default:
             cout << "Podano zly numer programu" << endl;
         }
