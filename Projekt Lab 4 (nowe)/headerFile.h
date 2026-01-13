@@ -40,9 +40,12 @@ void program() {
     cout << "5 - przelicz Kelwin -> Celsius" << endl;
     cout << "6 - przelicz Kelwin -> Fahr" << endl;
     cout << "7 - zakoncz dzialanie programu" << endl;
+    cout << "----------------------------------" << endl;
     cout << "8 - pokaz historie" << endl;
     cout << "9 - usun historie" << endl;
     cout << "10 - zmodyfikuj historie" << endl;
+    cout << "11 - losowe wypelnianie historii" << endl;
+    cout << "----------------------------------" << endl;
 }
 
 int check(float temp, char stopnie) {
@@ -149,5 +152,81 @@ void modyfikacja(int toModificate) {
         cout << pamiec[toModificate * 2 - 1];
         cout << jednostka[toModificate * 2 - 1]<< '\t'<< endl;
         break;
+    }
+}
+
+void losowanie(int randomData) {
+    srand(time(NULL));
+    for (int i = DataCounter; i < (DataCounter + randomData * 2); i+=2) {
+
+        char jednostkaCKF[] = { 'C', 'F', 'K' };
+        int indeks = rand() % 3;
+        char wylosowana = jednostkaCKF[indeks];
+
+        if (wylosowana == 'C') {
+            jednostka[i] = 'C';
+            int min = -273;
+            int max = 727;
+            pamiec[i] = min + rand() % (max-min+1);
+
+            char jednostkaKF[] = { 'F', 'K' };
+            int indeksKF = rand() % 2;
+            char wylosowanaKF = jednostkaKF[indeksKF];
+
+            if (wylosowanaKF == 'K') {
+                jednostka[i + 1] = 'K';
+                pamiec[i + 1] = CtoK(pamiec[i]);
+            }
+            if (wylosowanaKF == 'F') {
+                jednostka[i + 1] = 'F';
+                pamiec[i + 1] = CtoF(pamiec[i]);
+            }
+       }
+        if (wylosowana == 'K') {
+            jednostka[i] = 'K';
+            int min = 0;
+            int max = 1000;
+            pamiec[i] = min + rand() % (max - min + 1);
+
+            char jednostkaCF[] = { 'C', 'F' };
+            int indeksCF = rand() % 2;
+            char wylosowanaCF = jednostkaCF[indeksCF];
+
+            if (wylosowanaCF == 'C') {
+                jednostka[i + 1] = 'C';
+                pamiec[i + 1] = KtoC(pamiec[i]);
+            }
+            if (wylosowanaCF == 'F') {
+                jednostka[i + 1] = 'F';
+                pamiec[i + 1] = KtoF(pamiec[i]);
+            }
+        }
+        if (wylosowana == 'F') {
+            jednostka[i] = 'F';
+            int min = 0;
+            int max = 1000;
+            pamiec[i] = min + rand() % (max - min + 1);
+
+            char jednostkaKC[] = { 'C', 'K' };
+            int indeksKC = rand() % 2;
+            char wylosowanaKC = jednostkaKC[indeksKC];
+
+            if (wylosowanaKC == 'K') {
+                jednostka[i + 1] = 'K';
+                pamiec[i + 1] = FtoK(pamiec[i]);
+            }
+            if (wylosowanaKC == 'C') {
+                jednostka[i + 1] = 'C';
+                pamiec[i + 1] = FtoC(pamiec[i]);
+            }
+        }
+        
+    }
+    DataCounter = DataCounter + randomData * 2;
+}
+void wyswietlanie() {
+    for (int i = 0; i < DataCounter; i+=2) {
+        cout << (i / 2 + 1) << '\t' << pamiec[i] << jednostka[i];
+        cout << '\t' << pamiec[i + 1] << jednostka[i + 1] << endl;
     }
 }

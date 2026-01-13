@@ -1,6 +1,8 @@
 ﻿
 #include <iostream>
 #include <stdlib.h> // cls do czyszczenia ekranu
+#include <cstdlib> // Potrzebne do rand() i srand()
+#include <ctime>   // Potrzebne do time()
 
 int DataCounter = 0;//wskazuje na pierwszy pusty elemt tablicy
 double pamiec[100]; // przechowuje temperatury: stare i nowe
@@ -16,6 +18,7 @@ int main() {
     int numerprogramu;
     int entitytoRemove;
     int toModificate;
+    int randomData;
 
     
     for (int i = 0;; i++) { 
@@ -250,12 +253,34 @@ int main() {
             break;
               }
 
+        case 11: {
+            string odp;
+            cout << "Ile losowych temperatur przeliczyc? ";
+            cin >> randomData;
+
+            if ((DataCounter + randomData * 2) < 100) {
+                losowanie(randomData);
+            }
+            else {
+                cout << "Czy wygenerowac tylko tyle losowek ile zostalo miejsca?" << endl;
+                cin >> odp;
+                if (odp == "tak") {
+                    randomData = ((100 - DataCounter) / 2);
+                    losowanie(randomData);
+                }
+                if (odp == "nie") {
+                    break;
+                }
+            }
+            wyswietlanie();
+            break;
+        }
         default:
             cout << "Podano zly numer programu" << endl;
         }
-        cout << "Podano juz: " << (DataCounter + 1)/2 << " temperatur do przeliczenia. " << endl;
-        cout << "----------------------------------------------------------------" << endl;
-        cout << "Aby przejsc dalej, podaj wcisnij enter: ";
+        cout << "Podano juz: " << (DataCounter + 1)/2 << " temperatur. " << endl;
+        cout << "------------------------------------------" << endl;
+        cout << "Aby przejsc dalej, wcisnij enter: ";
         cin.ignore();
         cin.get();
     }
