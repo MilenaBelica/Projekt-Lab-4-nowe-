@@ -1,5 +1,6 @@
 #pragma once
 using namespace std;
+bool conversionFailed = false;
 
 float KtoF(float kelvin) {
     float wynik = (((kelvin - 273.15) * 9.0 / 5.0) + 32);
@@ -228,5 +229,111 @@ void wyswietlanie() {
     for (int i = 0; i < DataCounter; i+=2) {
         cout << (i / 2 + 1) << '\t' << pamiec[i] << jednostka[i];
         cout << '\t' << pamiec[i + 1] << jednostka[i + 1] << endl;
+    }
+}
+
+int convertToInteger(const char vector[], int size) {
+    int result = 0;
+    bool isNegative = false;
+    conversionFailed = false; // Resetujemy przy ka¿dym wywo³aniu
+
+    for (int i = 0; i < size; ++i) {
+        if (vector[i] == '\0') break; // Stop na koñcu napisu
+
+        if (isdigit(vector[i])) {
+            // Algorytm: poprzedni wynik * 10 + nowa cyfra
+            result = result * 10 + (vector[i] - '0');
+        }
+        else if (vector[i] == '-' && i == 0) {
+            isNegative = true; // Obs³uga liczby ujemnej
+        }
+        else if (vector[i] == '+' && i == 0) {
+            continue; // Ignoruj plus na pocz¹tku
+        }
+        else {
+            // Jeœli to nie cyfra i nie znak na pocz¹tku -> b³¹d
+            conversionFailed = true;
+            return 0;
+        }
+    }
+    return isNegative ? -result : result;
+    // „Zwróæ: (czy to prawda?), (jeœli tak, to daj to) : (jeœli nie, to daj tamto)”
+}
+
+int sprawdzanie() {
+    char tekst[280];
+
+    while (true) {
+        cin >> tekst;
+
+        int wynik = convertToInteger(tekst, 280);
+
+        if (!conversionFailed) {
+            return wynik; // Jeœli ok, zwracamy liczbê
+        }
+
+        // Jeœli conversionFailed == true, wypisujemy komunikat i pêtla leci dalej
+        cout << "To nie jest liczba! Podaj poprawna wartosc: ";
+    }
+}
+float convertToFloat(const char vector[], int size) {
+    float result = 0.0;
+    float fractionalMultiplier = 0.1;
+    bool isNegative = false;
+    bool isFractional = false;
+    bool signRecognised = false;
+
+    conversionFailed = false; // Resetujemy b³¹d przed startem
+
+    for (int i = 0; i < size; ++i) {
+        if (vector[i] == '\0') break;
+
+        if (vector[i] >= '0' && vector[i] <= '9') {
+            if (isFractional) {
+                // Jeœli jesteœmy po kropce, dodajemy u³amki
+                result += (vector[i] - '0') * fractionalMultiplier;
+                fractionalMultiplier *= 0.1;
+            }
+            else {
+                // Jeœli przed kropk¹, budujemy liczbê ca³kowit¹
+                result = result * 10.0 + (vector[i] - '0');
+            }
+        }
+        else if (vector[i] == '.' && isFractional == false) {
+            // ZnaleŸliœmy kropkê – zaczynamy liczyæ u³amki
+            isFractional = true;
+        }
+        else if (vector[i] == '-' && signRecognised == false) {
+            signRecognised = true;
+            isNegative = true;
+        }
+        else if (vector[i] == '+' && signRecognised == false) {
+            signRecognised = true;
+            continue;
+        }
+        else {
+            // Jakikolwiek inny znak (np. litera) to b³¹d
+            conversionFailed = true;
+            return 0.0;
+        }
+    }
+
+    return isNegative ? -result : result;
+}
+
+float sprawdzaniefloat() {
+    char tekst[280];
+    while (true) {
+
+        cin.getline(tekst, 280);
+        if (tekst[0] == '\0') continue;
+
+        float wynik = convertToFloat(tekst, 280);
+
+        if (!conversionFailed) {
+            return wynik;
+        }
+
+        cout << "To nie jest poprawny zapis temperatury! Sprobuj jeszcze raz." << endl;
     }
 }

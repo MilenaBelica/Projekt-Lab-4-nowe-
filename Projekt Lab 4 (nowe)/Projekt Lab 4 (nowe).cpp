@@ -3,6 +3,7 @@
 #include <stdlib.h> // cls do czyszczenia ekranu
 #include <cstdlib> // Potrzebne do rand() i srand()
 #include <ctime>   // Potrzebne do time()
+#include <cctype> // dla isdigit
 
 int DataCounter = 0;//wskazuje na pierwszy pusty elemt tablicy
 double pamiec[100]; // przechowuje temperatury: stare i nowe
@@ -15,7 +16,7 @@ using namespace std;
 
 
 int main() {
-    int numerprogramu;
+    
     int entitytoRemove;
     int toModificate;
     int randomData;
@@ -31,7 +32,7 @@ int main() {
 
         cout << "Ktory program chcesz uruchomic ?" << endl;
         program();
-        cin >> numerprogramu;
+        int numerprogramu = sprawdzanie();
 
         if (numerprogramu == 7) {
             cout << "Koniec programu" << endl;
@@ -40,9 +41,9 @@ int main() {
 
         switch (numerprogramu) {
         case 1: {
-            float fahr, celsius;
+            float celsius;
             cout << "Podaj wartosc Fahr: ";
-            cin >> fahr;
+            float fahr = sprawdzaniefloat();
 
             int wynik = check(fahr, 'F');
             if (wynik == -999) {
@@ -63,7 +64,7 @@ int main() {
         case 2: {
             float fahr, kelvin;
             cout << "Podaj wartosc Fahr: ";
-            cin >> fahr;
+            fahr = sprawdzaniefloat();
 
             int wynik = check(fahr, 'F');
             if (wynik == -999) {
@@ -84,7 +85,7 @@ int main() {
         case 3: {
             float celsius, fahr;
             cout << "Podaj wartosc Celsius: ";
-            cin >> celsius;
+            celsius = sprawdzaniefloat();
 
             int wynik = check(celsius, 'C');
             if (wynik == -999) {
@@ -105,7 +106,7 @@ int main() {
         case 4: {
             float celsius, kelvin;
             cout << "Podaj wartosc Celsius: ";
-            cin >> celsius;
+            celsius = sprawdzaniefloat();
 
             int wynik = check(celsius, 'C');
             if (wynik == -999) {
@@ -126,7 +127,7 @@ int main() {
         case 5: {
             float kelvin, celsius;
             cout << "Podaj wartosc Kelvin: ";
-            cin >> kelvin;
+            kelvin = sprawdzaniefloat();
 
             int wynik = check(kelvin, 'K');
             if (wynik == -999) {
@@ -147,7 +148,7 @@ int main() {
         case 6: {
             float kelvin, fahr;
             cout << "Podaj wartosc Kelvin: ";
-            cin >> kelvin;
+            kelvin = sprawdzaniefloat();
 
             int wynik = check(kelvin, 'K');
             if (wynik == -999) {
@@ -169,7 +170,7 @@ int main() {
             cout << "Wybierz ktora historie chcesz zobaczyc: " << endl;
             wersjahistorii();
             int wersja;
-            cin >> wersja;
+            wersja = sprawdzanie();
 
             if (DataCounter != 0) {
                 switch (wersja) {
@@ -228,7 +229,7 @@ int main() {
             }
             cout << endl;
             cout << "Ktora linie chcesz usunac? " << endl;
-            cin >> entitytoRemove;
+            entitytoRemove = sprawdzanie();
 
             if (entitytoRemove >= DataCounter) {
                 cout << "Taki element nie istnieje. " << endl;
@@ -248,7 +249,7 @@ int main() {
             }
             cout << endl;
             cout << "Ktora linie chcesz zmodyfikowac? ";
-            cin >> toModificate;
+            toModificate = sprawdzanie();
             modyfikacja(toModificate);
             break;
               }
@@ -256,7 +257,7 @@ int main() {
         case 11: {
             string odp;
             cout << "Ile losowych temperatur przeliczyc? ";
-            cin >> randomData;
+            randomData = sprawdzanie();
 
             if ((DataCounter + randomData * 2) < 100) {
                 losowanie(randomData);
@@ -280,7 +281,7 @@ int main() {
         }
         cout << "Podano juz: " << (DataCounter + 1)/2 << " temperatur. " << endl;
         cout << "------------------------------------------" << endl;
-        cout << "Aby przejsc dalej, wcisnij enter: ";
+        cout << "Aby przejsc dalej, wcisnij enter ( albo 2 razy :) ): ";
         cin.ignore();
         cin.get();
     }
